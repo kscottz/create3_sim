@@ -181,10 +181,13 @@ ament_export_dependencies(gazebo_ros)
 ament_export_dependencies(irobot_create_msgs)
 ament_export_dependencies(rclcpp)
 
-install(DIRECTORY include/
-        DESTINATION include)
+install(
+  DIRECTORY include/
+  DESTINATION include)
 
-install(TARGETS
+install(
+  TARGETS
+    docking_manager
     gazebo_ros_create_bumper
     gazebo_ros_create_cliff_sensor
     gazebo_ros_create_docking_status
@@ -193,7 +196,6 @@ install(TARGETS
     gazebo_ros_create_ir_intensity_sensor
     gazebo_ros_create_optical_mouse
     gazebo_ros_create_ir_opcode
-    docking_manager
     gazebo_ros_create_wheel_drop
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib

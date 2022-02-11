@@ -123,6 +123,17 @@ ament_target_dependencies(kidnap_estimator_publisher_lib
   ${dependencies}
 )
 
+add_library(toolbox_helper_lib SHARED)
+target_sources(
+  toolbox_helper_lib
+  PRIVATE
+    src/polar_coordinates.cpp
+)
+target_include_directories(toolbox_helper_lib PUBLIC include)
+ament_target_dependencies(toolbox_helper_lib
+  ${dependencies}
+)
+
 set(libraries_names
   hazard_publisher_lib
   ir_intensity_publisher_lib
@@ -131,6 +142,7 @@ set(libraries_names
   robot_state_lib
   mock_publisher_lib
   kidnap_estimator_publisher_lib
+  toolbox_helper_lib
 )
 
 #### Executables

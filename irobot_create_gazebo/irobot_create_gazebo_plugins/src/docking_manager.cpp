@@ -69,4 +69,28 @@ utils::PolarCoordinate DockingManager::ReceiverCartesianPointToEmitterPolarPoint
   return utils::toPolar(
     ignition::math::Vector2d{receiver_wrt_emitter_point.X(), receiver_wrt_emitter_point.Y()});
 }
+
+irobot_create_ignition_toolbox::utils::PolarCoordinate
+IrOpcode::ReceiverCartesianPointToEmitterPolarPoint(const tf2::Vector3 & receiver_point)
+{
+  tf2::Transform emitter_pose;
+  {
+    const std::lock_guard<std::mutex> lock(emitter_pose_mutex_);
+    emitter_pose = last_emitter_pose_;
+  }
+  tf2::Transform receiver_pose;
+  {
+    const std::lock_guard<std::mutex> lock(receiver_pose_mutex_);
+    receiver_pose = last_receiver_pose_;
+  }
+
+  // Pose of receiver relative to the emitter
+  tf2::Vector3 receiver_wrt_emitter_pose = irobot_create_ignition_toolbox::utils::object_wrt_frame(
+    receiver_pose, emitter_pose);
+  tf2::Vector3 receiver_wrt_emitter_point = receiver_wrt_emitter_pose + receiver_point;
+  return irobot_create_ignition_toolbox::utils::toPolar(receiver_wrt_emitter_point);
+}
+
+
+
 }  // namespace irobot_create_gazebo_plugins
